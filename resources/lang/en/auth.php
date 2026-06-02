@@ -68,7 +68,7 @@ return [
     'help_center' => 'Help Center',
     'forgot_password_title' => 'Forgot Password - Digital Memory Box',
     'forgot_password_hint' => 'No worries! Enter your email address and we will send you a link to reset your password.',
-    
+
     'enter_email' => 'Enter your email address',
 
     'send_reset_link' => 'Send Reset Link',
@@ -77,4 +77,6 @@ return [
     'new_password' => 'New Password *',
     'create_password' => 'Create a password',
     'reset_password_btn' => 'Reset Password',
+    'back_home' => 'Back to Home',
+    'failed' => 'These credentials do not match our records.',
 ];

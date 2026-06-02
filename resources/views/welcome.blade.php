@@ -67,19 +67,19 @@
     <div
         class="absolute bottom-6 w-full flex justify-center items-center gap-4 text-[11px] text-gray-500 font-medium tracking-wide">
 
-        <a href="#" class="hover:text-gray-900 transition-colors">
+        <a href="{{ route('privacy') }}" class="hover:text-gray-900 transition-colors">
             {{ __('auth.privacy') }}
         </a>
 
         <span class="text-gray-300">&bull;</span>
 
-        <a href="#" class="hover:text-gray-900 transition-colors">
+        <a href="{{ route('terms') }}" class="hover:text-gray-900 transition-colors">
             {{ __('auth.terms') }}
         </a>
 
         <span class="text-gray-300">&bull;</span>
 
-        <a href="#" class="hover:text-gray-900 transition-colors">
+        <a href="{{ route('help-center') }}" class="hover:text-gray-900 transition-colors">
             {{ __('auth.help_center') }}
         </a>
     </div>

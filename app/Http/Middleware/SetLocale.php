@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Session;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Support\Facades\Auth;
 
 class SetLocale
 {
@@ -15,30 +16,33 @@ class SetLocale
      *
      * @param  Closure(Request): (Response)  $next
      */
-     public function handle(Request $request, Closure $next)
-    {
-        // إذا المستخدم اختار لغة بروحه
-        if (Session::has('locale')) {
-            App::setLocale(Session::get('locale'));
-        }
-        else {
+    public function handle(Request $request, Closure $next)
+{
+    $locale = null;
 
-            //لغة المتصفح
-            $browserLocale = substr($request->server('HTTP_ACCEPT_LANGUAGE') ?? 'en', 0, 2);
-
-            // اللغات المدعومة
-            $supported = ['en', 'ar'];
-
-            //تحقق من الدعم
-            if (!in_array($browserLocale, $supported)) {
-                $browserLocale = config('app.locale'); // default
-            }
-
-            App::setLocale($browserLocale);
-        }
-
-        return $next($request);
+    // 1. user locale (highest priority)
+    if (Auth::check() && Auth::user()->locale) {
+        $locale = Auth::user()->locale;
     }
 
-    
+    // 2. session locale
+    elseif (Session::has('locale')) {
+        $locale = Session::get('locale');
+    }
+
+    // 3. browser locale
+    else {
+        $browserLocale = substr($request->server('HTTP_ACCEPT_LANGUAGE') ?? 'en', 0, 2);
+
+        $supported = ['en', 'ar'];
+
+        $locale = in_array($browserLocale, $supported)
+            ? $browserLocale
+            : config('app.locale');
+    }
+
+    App::setLocale($locale);
+
+    return $next($request);
+}
 }

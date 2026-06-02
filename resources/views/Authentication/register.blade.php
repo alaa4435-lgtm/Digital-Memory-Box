@@ -66,9 +66,9 @@
                             class="rounded border-gray-300 text-indigo-500 focus:ring-indigo-500 w-4 h-4 mt-0.5" required>
                         <span class="text-gray-500 text-[11px] font-medium leading-tight">
                             {{ __('auth.agree_terms') }}
-                            <a href="#" class="text-indigo-500 hover:underline">{{ __('auth.terms') }}</a>
+                            <a href="{{ route('terms') }}" class="text-indigo-500 hover:underline">{{ __('auth.terms') }}</a>
                             {{ __('auth.and') }}
-                            <a href="#" class="text-indigo-500 hover:underline">{{ __('auth.privacy') }}</a>
+                            <a href="{{ route('privacy') }}" class="text-indigo-500 hover:underline">{{ __('auth.privacy') }}</a>
                         </span>
                     </label>
                 </div>

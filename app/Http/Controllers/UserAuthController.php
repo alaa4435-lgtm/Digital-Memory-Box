@@ -4,20 +4,20 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\UserLoginRequest;
 use App\Http\Requests\UserRegisterRequest;
+use App\Models\Memory;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Laravel\Sanctum\PersonalAccessToken;
 
 class UserAuthController extends Controller
 {
     public function register(UserRegisterRequest $request)
     {
-        // create user
-        $user = User::create($request->validated());
+        // إنشاء الحساب وإضافة اللغة الحالية تلقائياً
+        $user = User::create([...$request->validated(), 'locale' => app()->getLocale()]);
         Auth::login($user);
-        // return token
-        return redirect('/dashboard');
+
+        return redirect()->route('dashboard');
     }
 
     public function login(UserLoginRequest $request)
@@ -25,10 +25,19 @@ class UserAuthController extends Controller
         if (Auth::attempt($request->validated())) {
             $request->session()->regenerate();
 
-            return redirect('/dashboard');
+            $user = Auth::user();
+
+            if ($user && !$user->locale) {
+                $user->update([
+                    'locale' => app()->getLocale(),
+                ]);
+            }
+
+            return redirect()->intended(route('dashboard'));
         }
+
         return back()->withErrors([
-            'email' => 'Invalid credentials',
+            'email' => __('auth.failed'),
         ]);
     }
 
@@ -48,12 +57,16 @@ class UserAuthController extends Controller
         return response()->json([
             'message' => 'User profile',
             'data' => $user,
+            'locale' => $user->locale,
         ], 200);
     }
-    
+
     public function dashboard()
     {
-        return view('Authentication.dashboard');
-    }
+        $memories = Memory::where('user_id', auth()->id())->latest()->get();
+        $photosVideosCount = $memories->whereIn('media_type', ['image', 'video'])->count();
+        $totalEntriesCount = $memories->count();
 
+        return view('Dashboard.index', compact('memories', 'photosVideosCount', 'totalEntriesCount'));
+    }
 }

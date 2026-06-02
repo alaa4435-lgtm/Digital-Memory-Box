@@ -8,25 +8,37 @@ use Illuminate\Support\Facades\Auth;
 
 class GoogleAuthController extends Controller
 {
-    public function redirect()
+    public function redirectToGoogle()
     {
-        return Socialite::driver('google')->redirect();
+        return Socialite::driver('google')
+            ->with(['prompt' => 'select_account'])
+            ->redirect();
     }
-
     public function callback()
     {
-        $googleUser = Socialite::driver('google')->stateless()->user();
+        try {
+            // 1. استقبال بيانات المستخدم من جوجل
+            $googleUser = Socialite::driver('google')->stateless()->user();
 
-        $user = User::updateOrCreate(
-            ['email' => $googleUser->email],
-            [
-                'name' => $googleUser->name,
-                'password' => bcrypt(str()->random(16)),
-            ]
-        );
+            // 2. إنشاء المستخدم أو تحديث بياناته إذا كان مسجلاً مسبقاً
+            $user = User::updateOrCreate(
+                ['email' => $googleUser->email],
+                [
+                    'name' => $googleUser->name,
+                    // يمكنك تخزين الـ google_id أيضاً إذا كان متوفراً في قاعدة بياناتك
+                    // 'google_id' => $googleUser->id, 
+                    'password' => bcrypt(str()->random(16)),
+                ]
+            );
 
-        Auth::login($user);
+            // 3. تسجيل دخول المستخدم في تطبيقك
+            Auth::login($user);
 
-        return redirect('/dashboard');
+            // 4. توجيهه إلى لوحة التحكم (Dashboard)
+            return redirect()->intended('/dashboard');
+        } catch (\Exception $e) {
+            // في حال حدوث خطأ أثناء الاتصال بجوجل، وجهه لصفحة تسجيل الدخول مع رسالة خطأ
+            return redirect('/login')->with('error', 'Something went wrong with Google login.');
+        }
     }
 }

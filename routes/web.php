@@ -1,6 +1,9 @@
 <?php
 
 use App\Http\Controllers\GoogleAuthController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\LanguageController;
+use App\Http\Controllers\MemoryController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserAuthController;
 use Illuminate\Support\Facades\App;
@@ -28,19 +31,16 @@ Route::middleware('guest')->group(function () {
 Route::middleware('auth')->group(function () {
     Route::post('/logout', [UserAuthController::class, 'logout'])->name('logout');
     Route::get('/dashboard', [UserAuthController::class, 'dashboard'])->name('dashboard');
+    Route::resource('memories', MemoryController::class);
 });
 
 
-Route::get('/auth/google', [GoogleAuthController::class, 'redirect']);
+Route::get('/auth/google', [GoogleAuthController::class, 'redirectToGoogle'])->name('auth.google');
 Route::get('/auth/google/callback', [GoogleAuthController::class, 'callback']);
 
+Route::get('/lang/{lang}', [LanguageController::class, 'switch']);
 
+Route::view('/help-center', 'pages.help-center')->name('help-center');
+Route::view('/terms-of-service', 'pages.terms')->name('terms');
+Route::view('/privacy-policy', 'pages.privacy')->name('privacy');
 
-Route::get('/lang/{locale}', function ($locale) {
-
-    if (in_array($locale, ['en', 'ar'])) {
-        Session::put('locale', $locale);
-    }
-
-    return back();
-});
