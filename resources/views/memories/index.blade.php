@@ -41,9 +41,19 @@
             {{ __('memory.videos') }}
         </button>
 
-        <button data-filter="voice"
+        <button data-filter="audio"
             class="filter-btn px-4 py-2 rounded-xl text-xs font-bold bg-white text-slate-500 hover:text-slate-800 border border-slate-100 shadow-sm transition-all">
-            {{ __('memory.voice_notes') }}
+            {{ __('memory.audio_notes') }}
+        </button>
+
+        <button data-filter="text"
+            class="filter-btn px-4 py-2 rounded-xl text-xs font-bold bg-white text-slate-500 hover:text-slate-800 border border-slate-100 shadow-sm transition-all">
+            {{ __('memory.text_notes') }}
+        </button>
+
+        <button data-filter="favorite"
+            class="filter-btn px-4 py-2 rounded-xl text-xs font-bold bg-white text-slate-500 hover:text-slate-800 border border-slate-100 shadow-sm transition-all">
+            {{ __('home.favorites') }}
         </button>
 
     </div>
@@ -69,7 +79,7 @@
 
         @forelse($memories ?? [] as $memory)
 
-            <div data-type="{{ $memory->media_type }}"
+            <div data-type="{{ $memory->media_type }}" data-favorite="{{ $memory->is_favorite ? '1' : '0' }}"
                 class="memory-card bg-white/70 backdrop-blur-md border border-slate-100 rounded-3xl p-5 shadow-sm hover:shadow-md transition-all flex flex-col justify-between group relative overflow-hidden">
 
                 <div>
@@ -81,11 +91,11 @@
                                 ? __('memory.photo')
                                 : ($memory->media_type == 'video'
                                     ? __('memory.video')
-                                    : __('memory.voice')) }}
+                                    : ($memory->media_type == 'audio' ? __('memory.voice') : __('memory.text'))) }}
                         </span>
 
                         <div class="text-slate-400 text-md">
-                            <i class="{{ $memory->media_type == 'image' ? 'fa-regular fa-image' : 'fa-regular fa-file-video' }}"></i>
+                            <i class="{{ $memory->media_type == 'image' ? 'fa-regular fa-image' : ($memory->media_type == 'video' ? 'fa-solid fa-video' : ($memory->media_type == 'audio' ? 'fa-solid fa-microphone-lines' : 'fa-solid fa-align-left')) }}"></i>
                         </div>
 
                     </div>
@@ -98,6 +108,11 @@
                                 <img src="{{ asset('storage/' . $memory->media_path) }}"
                                      alt="{{ $memory->title }}"
                                      class="w-full h-full object-cover">
+                            @elseif($memory->media_type == 'audio')
+                                <div class="w-full h-full flex flex-col items-center justify-center bg-slate-900 text-slate-400">
+                                    <i class="fa-solid fa-waveform fa-3x mb-4 text-indigo-500/50"></i>
+                                    <audio src="{{ asset('storage/' . $memory->media_path) }}" controls class="w-11/12 h-10 opacity-90"></audio>
+                                </div>
                             @else
                                 <video src="{{ asset('storage/' . $memory->media_path) }}"
                                        class="w-full h-full object-cover"
@@ -110,6 +125,13 @@
                                 </div>
                             @endif
 
+                        </div>
+
+                    @else
+                        
+                        <div class="w-full h-44 rounded-2xl bg-slate-50 flex flex-col items-center justify-center text-slate-400 mb-4 border border-dashed border-slate-200 group-hover:bg-slate-100 transition-colors">
+                            <i class="fa-solid fa-align-left text-3xl mb-2 text-indigo-300"></i>
+                            <span class="text-[10px] font-semibold uppercase tracking-wider text-slate-400">{{ __('memory.text_notes') }}</span>
                         </div>
 
                     @endif
@@ -139,6 +161,14 @@
                     </span>
 
                     <div class="flex items-center gap-1">
+
+                        <form action="{{ route('memories.favorite', $memory->id) }}" method="POST" class="inline">
+                            @csrf
+                            @method('PATCH')
+                            <button type="submit" class="p-1.5 rounded-lg transition-all {{ $memory->is_favorite ? 'text-amber-400 hover:text-amber-500 hover:bg-amber-50' : 'text-slate-300 hover:text-amber-400 hover:bg-amber-50' }}" title="Favorite">
+                                <i class="{{ $memory->is_favorite ? 'fa-solid' : 'fa-regular' }} fa-star text-sm"></i>
+                            </button>
+                        </form>
 
                         <a href="{{ route('memories.edit', $memory->id) }}"
                            class="text-slate-300 hover:text-indigo-600 p-1.5 rounded-lg hover:bg-indigo-50 transition-all"
@@ -222,8 +252,19 @@ document.addEventListener('DOMContentLoaded', function () {
 
             cards.forEach(card => {
                 const cardType = card.getAttribute('data-type');
+                const isFavorite = card.getAttribute('data-favorite');
 
-                if (filterValue === 'all' || cardType === filterValue) {
+                if (filterValue === 'all') {
+                    card.style.display = 'flex';
+                    visibleCardsCount++;
+                } else if (filterValue === 'favorite') {
+                    if (isFavorite === '1') {
+                        card.style.display = 'flex';
+                        visibleCardsCount++;
+                    } else {
+                        card.style.display = 'none';
+                    }
+                } else if (cardType === filterValue) {
                     card.style.display = 'flex';
                     visibleCardsCount++;
                 } else {

@@ -11,62 +11,77 @@ use Illuminate\Support\Facades\Auth;
 
 class UserAuthController extends Controller
 {
-    public function register(UserRegisterRequest $request)
+    public function showLogin()
     {
-        // إنشاء الحساب وإضافة اللغة الحالية تلقائياً
-        $user = User::create([...$request->validated(), 'locale' => app()->getLocale()]);
-        Auth::login($user);
+        return view('auth.login');
+    }
+
+    public function showRegister()
+    {
+        return view('auth.register');
+    }
+      public function register(UserRegisterRequest $request)
+    {
+        $user = User::create([
+            ...$request->validated(),
+            'locale' => app()->getLocale(),
+        ]);
+
+        Auth::guard('web')->login($user);
 
         return redirect()->route('dashboard');
     }
 
     public function login(UserLoginRequest $request)
-    {
-        if (Auth::attempt($request->validated())) {
-            $request->session()->regenerate();
+{
+    $credentials = $request->validated();
 
-            $user = Auth::user();
+    if (Auth::guard('web')->attempt($credentials)) {
 
-            if ($user && !$user->locale) {
-                $user->update([
-                    'locale' => app()->getLocale(),
-                ]);
-            }
+        $request->session()->regenerate();
 
-            return redirect()->intended(route('dashboard'));
+        $user = Auth::guard('web')->user();
+
+        if (!$user->locale) {
+            $user->update([
+                'locale' => app()->getLocale(),
+            ]);
         }
 
-        return back()->withErrors([
-            'email' => __('auth.failed'),
-        ]);
+        return redirect()->intended(route('dashboard'));
     }
 
-    public function logout(Request $request)
-    {
-        Auth::logout();
+    return back()->withErrors([
+        'email' => __('auth.failed'),
+    ]);
+}
+public function logout(Request $request)
+{
+    Auth::guard('web')->logout();
 
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
+    $request->session()->invalidate();
+    $request->session()->regenerateToken();
 
-        return redirect('/login');
-    }
+    return redirect()->route('login');
+}
 
-    public function me(Request $request)
-    {
-        $user = $request->user();
-        return response()->json([
-            'message' => 'User profile',
-            'data' => $user,
-            'locale' => $user->locale,
-        ], 200);
-    }
+ public function me(Request $request)
+{
+    $user = Auth::guard('web')->user();
+
+    return response()->json([
+        'message' => 'User profile',
+        'data' => $user,
+        'locale' => $user->locale,
+    ]);
+}
 
     public function dashboard()
     {
-        $memories = Memory::where('user_id', auth()->id())->latest()->get();
-        $photosVideosCount = $memories->whereIn('media_type', ['image', 'video'])->count();
+        $memories = Memory::where('user_id', Auth::id())->latest()->get();
+        $mediaCount = $memories->whereIn('media_type', ['image', 'video','audio', 'text'])->count();
         $totalEntriesCount = $memories->count();
-
-        return view('Dashboard.index', compact('memories', 'photosVideosCount', 'totalEntriesCount'));
+        $favoritesCount = $memories->where('is_favorite', true)->count();
+        return view('dashboard.index', compact('memories', 'mediaCount', 'totalEntriesCount', 'favoritesCount'));
     }
 }

@@ -5,40 +5,40 @@ namespace App\Http\Controllers;
 use Laravel\Socialite\Facades\Socialite;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class GoogleAuthController extends Controller
 {
     public function redirectToGoogle()
     {
         return Socialite::driver('google')
-            ->with(['prompt' => 'select_account'])
+            ->scopes(['openid', 'profile', 'email'])
+            ->with(['prompt' => 'select_account consent'])
             ->redirect();
     }
+
     public function callback()
     {
         try {
-            // 1. استقبال بيانات المستخدم من جوجل
-            $googleUser = Socialite::driver('google')->stateless()->user();
+            $googleUser = Socialite::driver('google')->user();
 
-            // 2. إنشاء المستخدم أو تحديث بياناته إذا كان مسجلاً مسبقاً
             $user = User::updateOrCreate(
                 ['email' => $googleUser->email],
                 [
                     'name' => $googleUser->name,
-                    // يمكنك تخزين الـ google_id أيضاً إذا كان متوفراً في قاعدة بياناتك
-                    // 'google_id' => $googleUser->id, 
-                    'password' => bcrypt(str()->random(16)),
+                    'password' => bcrypt(Str::random(24)),
+                    'locale' => session('locale', app()->getLocale()),
+                    'email_verified_at' => now(),
                 ]
             );
 
-            // 3. تسجيل دخول المستخدم في تطبيقك
-            Auth::login($user);
+            Auth::login($user, true);
 
-            // 4. توجيهه إلى لوحة التحكم (Dashboard)
             return redirect()->intended('/dashboard');
+
         } catch (\Exception $e) {
-            // في حال حدوث خطأ أثناء الاتصال بجوجل، وجهه لصفحة تسجيل الدخول مع رسالة خطأ
-            return redirect('/login')->with('error', 'Something went wrong with Google login.');
+            return redirect('/login')
+                ->with('error', __('auth.google_login_failed'));
         }
     }
 }

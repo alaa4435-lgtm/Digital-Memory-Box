@@ -4,9 +4,9 @@ return [
     'create_subtitle' => 'Document a new precious moment in your secure sanctuary.',
     'upload_media' => 'Upload Media',
     'drag_drop' => 'Drag and drop your file here',
-    'file_limit' => 'Photos or Videos up to 50MB',
+    'file_limit' => 'Photos, Videos, or Audios up to 200MB',
     'browse_file' => 'Browse File',
-    'description' => 'Description / Story',
+    'description' => 'Description',
     'description_placeholder' => 'What happened during this moment?',
     'title' => 'Memory Title',
     'title_placeholder' => 'e.g., Sunday Picnic',
@@ -21,7 +21,8 @@ return [
     'all_moments' => 'All Moments',
     'photos' => 'Photos',
     'videos' => 'Videos',
-    'voice_notes' => 'Voice Notes',
+    'audio_notes' => 'Audios',
+    'text_notes' => 'Text Notes',
 
     'no_items_found' => 'No items found',
     'no_items_desc' => 'There are no saved items in this category at the moment.',
@@ -29,6 +30,7 @@ return [
     'photo' => 'Photo',
     'video' => 'Video',
     'voice' => 'Voice',
+    'text' => 'Text',
 
     'no_found_js_prefix' => 'No ',
     'no_found_js_suffix' => ' Found',
@@ -50,7 +52,7 @@ return [
     'edit_subtitle' => 'Update the details of your saved moment.',
 
     'media_label' => 'Memory Media',
-    'replace_file_text' => 'Click to replace current photo or video',
+    'replace_file_text' => 'Click to replace current photo, video, or audio',
     'browse_new_file' => 'Browse New File',
 
     'description_label' => 'Description / Story',

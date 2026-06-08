@@ -20,6 +20,7 @@ class MemoryController extends Controller
         $memory = Memory::create([
             ...$request->validated(),
             'user_id' => Auth::id(),
+            'media_type' => $request->hasFile('media') ? null : 'text',
         ]);
 
         if ($request->hasFile('media')) {
@@ -27,12 +28,16 @@ class MemoryController extends Controller
             $file = $request->file('media');
             $memory->media_path = $file->store('memories', 'public');
 
-            $memory->media_type = str_starts_with(
-                $file->getMimeType(),
-                'image/'
-            ) ? 'image' : 'video';
+            $mimeType = $file->getMimeType();
+            if (str_starts_with($mimeType, 'image/')) {
+                $memory->media_type = 'image';
+            } elseif (str_starts_with($mimeType, 'audio/')) {
+                $memory->media_type = 'audio';
+            } else {
+                $memory->media_type = 'video';
+            }
 
-           $memory->save();
+            $memory->save();
         }
 
         return redirect()->route('memories.index');
@@ -70,9 +75,18 @@ class MemoryController extends Controller
             $file = $request->file('media');
 
             $mediaData['media_path'] = $file->store('memories', 'public');
-            $mediaData['media_type'] = str_starts_with($file->getMimeType(), 'image/') ? 'image' : 'video';
+            $mimeType = $file->getMimeType();
+            if (str_starts_with($mimeType, 'image/')) {
+                $mediaData['media_type'] = 'image';
+            } elseif (str_starts_with($mimeType, 'audio/')) {
+                $mediaData['media_type'] = 'audio';
+            } else {
+                $mediaData['media_type'] = 'video';
+            }
 
             $memory->update($mediaData);
+        } elseif (!$memory->media_path) {
+            $memory->update(['media_type' => 'text']);
         }
 
         return redirect()->route('memories.index');
@@ -87,5 +101,14 @@ class MemoryController extends Controller
         }
         $memory->delete();
         return redirect()->route('memories.index');
+    }
+
+    public function toggleFavorite(int $id)
+    {
+        $memory = Memory::where('user_id', Auth::id())->findOrFail($id);
+        $memory->is_favorite = !$memory->is_favorite;
+        $memory->save();
+
+        return back();
     }
 }

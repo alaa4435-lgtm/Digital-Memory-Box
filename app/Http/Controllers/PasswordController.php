@@ -34,7 +34,7 @@ class PasswordController extends Controller
      */
     public function showResetForm($token)
     {
-        return view('Authentication.reset-password', ['token' => $token]);
+        return view('auth.reset-password', ['token' => $token]);
     }
 
     /**
@@ -57,11 +57,6 @@ class PasswordController extends Controller
             ? redirect('/login')->with('success', 'Password reset successful')
             : back()->withErrors(['email' => __($status)]);
     }
-
-
-    /**
-     * Send a reset link to the given user.
-     */
 
     public function verifyPin(Request $request)
     {

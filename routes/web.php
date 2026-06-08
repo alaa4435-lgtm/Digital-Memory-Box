@@ -13,15 +13,17 @@ use App\Http\Controllers\PasswordController;
 Route::get('/', function () {
     return view('welcome');
 });
-
+Route::get('/phpinfo', function() {
+    phpinfo();
+});
 Route::middleware('guest')->group(function () {
-    Route::get('/login', function() { return view('Authentication.login'); })->name('login');
+    Route::get('/login', function() { return view('auth.login'); })->name('login');
     Route::post('/login', [UserAuthController::class, 'login']);
     
-    Route::get('/register', function() { return view('Authentication.register'); })->name('register');
+    Route::get('/register', function() { return view('auth.register'); })->name('register');
     Route::post('/register', [UserAuthController::class, 'register']);
     
-    Route::get('/forgot-password', function() { return view('Authentication.forgot-password'); })->name('password.request');
+    Route::get('/forgot-password', function() { return view('auth.forgot-password'); })->name('password.request');
     Route::post('/forgot-password', [PasswordController::class, 'sendResetLink'])->name('password.email');
     
     Route::get('/reset-password/{token}', [PasswordController::class, 'showResetForm'])->name('password.reset');
@@ -31,6 +33,7 @@ Route::middleware('guest')->group(function () {
 Route::middleware('auth')->group(function () {
     Route::post('/logout', [UserAuthController::class, 'logout'])->name('logout');
     Route::get('/dashboard', [UserAuthController::class, 'dashboard'])->name('dashboard');
+    Route::patch('/memories/{memory}/favorite', [MemoryController::class, 'toggleFavorite'])->name('memories.favorite');
     Route::resource('memories', MemoryController::class);
 });
 

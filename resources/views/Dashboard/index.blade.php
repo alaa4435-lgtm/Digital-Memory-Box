@@ -65,7 +65,7 @@
             </div>
             <div>
                 <p class="text-xs font-semibold text-slate-400">{{ __('home.favorites') }}</p>
-                <h3 class="text-2xl font-bold text-slate-800 mt-0.5">0</h3>
+                <h3 class="text-2xl font-bold text-slate-800 mt-0.5">{{ $favoritesCount ?? 0 }}</h3>
             </div>
         </div>
 
@@ -94,6 +94,10 @@
                             <div class="w-full h-32 rounded-2xl overflow-hidden bg-slate-900 mb-3 border border-slate-50 relative shadow-inner">
                                 @if($memory->media_type == 'image')
                                     <img src="{{ asset('storage/' . $memory->media_path) }}" alt="{{ $memory->title }}" class="w-full h-full object-cover group-hover:scale-102 transition-transform duration-300">
+                                @elseif($memory->media_type == 'audio')
+                                    <div class="w-full h-full flex items-center justify-center bg-slate-800 text-slate-400">
+                                        <i class="fa-solid fa-microphone-lines text-2xl text-slate-500"></i>
+                                    </div>
                                 @else
                                     <video src="{{ asset('storage/' . $memory->media_path) }}" class="w-full h-full object-cover" muted playsinline></video>
                                     <div class="absolute inset-0 flex items-center justify-center bg-black/10">
@@ -125,9 +129,19 @@
                             <i class="fa-regular fa-calendar text-[9px]"></i> 
                             {{ $memory->created_at ? $memory->created_at->format('M d, Y') : 'Recent' }}
                         </span>
-                        <a href="{{ route('memories.show', $memory->id) }}" class="text-[10px] font-bold text-indigo-500 hover:text-indigo-700 transition-colors">
-                            Details <i class="fa-solid fa-angle-right text-[8px]"></i>
-                        </a>
+                        <div class="flex items-center gap-2">
+                            <form action="{{ route('memories.favorite', $memory->id) }}" method="POST" class="inline">
+                                @csrf
+                                @method('PATCH')
+                                <button type="submit" class="p-1 rounded-md transition-all {{ $memory->is_favorite ? 'text-amber-400 hover:text-amber-500' : 'text-slate-300 hover:text-amber-400' }}" title="Favorite">
+                                    <i class="{{ $memory->is_favorite ? 'fa-solid' : 'fa-regular' }} fa-star text-[10px]"></i>
+                                </button>
+                            </form>
+                            
+                            <a href="{{ route('memories.show', $memory->id) }}" class="text-[10px] font-bold text-indigo-500 hover:text-indigo-700 transition-colors">
+                                Details <i class="fa-solid fa-angle-right text-[8px]"></i>
+                            </a>
+                        </div>
                     </div>
                 </div>
             @empty

@@ -79,4 +79,12 @@ return [
     'reset_password_btn' => 'Reset Password',
     'back_home' => 'Back to Home',
     'failed' => 'These credentials do not match our records.',
+    'google_login_failed'=> 'Something went wrong with Google login',
+
+    'verify_email_heading' => 'Verify Your Email Address',
+    'verify_email_content' => 'Thank you for registering! Please click the link below to verify your email address and complete your registration.',
+    'verify_email_note' => 'If you did not create an account, please ignore this email.',
+    'verify_email_link' => 'Verify Email Address',
+    'email_verification_failed' => 'Email verification failed. Please try again.',
+    'email_verified_success' => 'Email verified successfully!',
 ];

@@ -17,7 +17,8 @@ return new class extends Migration
         $table->string('title');
         $table->text('description')->nullable();
         $table->string('media_path')->nullable();
-        $table->enum('media_type', ['image','video'])->nullable();
+        $table->enum('media_type', ['image', 'video', 'audio', 'text'])->nullable();
+        $table->boolean('is_favorite')->default(false);
         $table->timestamps();
     });
 }

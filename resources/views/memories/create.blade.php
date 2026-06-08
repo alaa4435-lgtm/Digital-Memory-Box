@@ -23,10 +23,10 @@
 
                 <div class="border-2 border-dashed border-slate-200 hover:border-indigo-400 bg-slate-50/50 rounded-2xl p-8 transition-all cursor-pointer flex flex-col items-center justify-center group">
 
-                    <input type="file" name="media" class="hidden" id="mediaInput" onchange="previewFile()">
+                    <input type="file" name="media" accept="image/*,video/*,audio/*" class="hidden" id="mediaInput" onchange="previewFile()">
 
                     <div class="w-12 h-12 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center text-xl mb-3 group-hover:scale-110 transition-transform">
-                        <i class="fa-regular fa-images"></i>
+                        <i class="fa-solid fa-photo-film"></i>
                     </div>
 
                     <p class="text-sm font-semibold text-slate-700" id="uploadStatus">

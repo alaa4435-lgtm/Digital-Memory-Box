@@ -11,7 +11,8 @@ class Memory extends Model
         'title',
         'description',
         'media_path',
-        'media_type'
+        'media_type',
+        'is_favorite'
     ];
 
     public function user()

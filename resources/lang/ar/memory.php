@@ -4,9 +4,9 @@ return [
     'create_subtitle' => 'وثّق لحظة مهمة في مساحتك الآمنة.',
     'upload_media' => 'رفع ملف',
     'drag_drop' => 'اسحب وأفلت الملف هنا',
-    'file_limit' => 'صور أو فيديو حتى 50 ميغابايت',
+    'file_limit' => 'صور، فيديو، أو صوتيات حتى 200 ميغابايت',
     'browse_file' => 'اختيار ملف',
-    'description' => 'الوصف / القصة',
+    'description' => 'الوصف',
     'description_placeholder' => 'شن صار في هذي اللحظة؟',
     'title' => 'عنوان الذكرى',
     'title_placeholder' => 'مثال: نزهة الأحد',
@@ -20,7 +20,8 @@ return [
     'all_moments' => 'كل اللحظات',
     'photos' => 'صور',
     'videos' => 'فيديوهات',
-    'voice_notes' => 'مذكرات صوتية',
+    'audio_notes' => 'صوتيات',
+    'text_notes' => 'ملاحظات نصية',
 
     'no_items_found' => 'لا توجد عناصر',
     'no_items_desc' => 'لا توجد عناصر محفوظة في هذا التصنيف حالياً.',
@@ -28,6 +29,7 @@ return [
     'photo' => 'صورة',
     'video' => 'فيديو',
     'voice' => 'صوت',
+    'text' => 'نص',
 
     'no_found_js_prefix' => 'لا توجد ',
     'no_found_js_suffix' => ' حالياً',
@@ -49,7 +51,7 @@ return [
     'edit_subtitle' => 'قم بتحديث تفاصيل اللحظة المحفوظة.',
 
     'media_label' => 'وسائط الذاكرة',
-    'replace_file_text' => 'اضغط لاستبدال الصورة أو الفيديو الحالي',
+    'replace_file_text' => 'اضغط لاستبدال الصورة أو الفيديو أو الصوت الحالي',
     'browse_new_file' => 'اختر ملف جديد',
     'description_label' => 'الوصف / القصة',
     'title_label' => 'عنوان الذاكرة',
