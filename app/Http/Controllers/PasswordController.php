@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\RestPasswordRequest;
+use App\Http\Requests\UpdatePasswordRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
@@ -58,16 +60,12 @@ class PasswordController extends Controller
             : back()->withErrors(['email' => __($status)]);
     }
 
-    public function verifyPin(Request $request)
+    public function verifyPin(VerifyPinRequest $request)
     {
-        $request->validate([
-            'email' => 'required|email',
-            'pin' => 'required'
-        ]);
-
+        $validated = $request->validated();
         $record = DB::table('password_resets')
-            ->where('email', $request->email)
-            ->where('pin', $request->pin)
+            ->where('email', $validated['email'])
+            ->where('pin', $validated['pin'])
             ->first();
 
         if (!$record) {
@@ -79,8 +77,23 @@ class PasswordController extends Controller
         }
 
         return redirect()->route('password.reset', [
-            'email' => $request->email
+            'email' => $validated['email']
         ]);
     }
 
+    public function showChangePassword()
+    {
+        return view('user.change-password');
+    }
+
+    public function updatePassword(UpdatePasswordRequest $request)
+    {
+        $validated = $request->validated();
+
+        auth()->user()->update([
+            'password' => Hash::make($validated['password']),
+        ]);
+
+        return back()->with('success', __('passwords.password_updated_successfully'));
+    }
 }

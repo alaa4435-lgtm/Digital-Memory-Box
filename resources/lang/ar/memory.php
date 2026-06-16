@@ -3,7 +3,7 @@ return [
     'create_title' => 'إنشاء ذكرى',
     'create_subtitle' => 'وثّق لحظة مهمة في مساحتك الآمنة.',
     'upload_media' => 'رفع ملف',
-    'drag_drop' => 'اسحب وأفلت الملف هنا',
+    'drag_drop' => 'اسحب وأفلت الملف او اكثر هنا',
     'file_limit' => 'صور، فيديو، أو صوتيات حتى 200 ميغابايت',
     'browse_file' => 'اختيار ملف',
     'description' => 'الوصف',
@@ -23,16 +23,19 @@ return [
     'audio_notes' => 'صوتيات',
     'text_notes' => 'ملاحظات نصية',
 
-    'no_items_found' => 'لا توجد عناصر',
-    'no_items_desc' => 'لا توجد عناصر محفوظة في هذا التصنيف حالياً.',
+    'no_items_found' => 'لا توجد ذكريات',
+    'no_items_desc' => 'لا توجد ذكريات محفوظة حالياً.',
+    'items_found'=> 'الذكريات التي تم العثور عليها',
 
-    'photo' => 'صورة',
+    'photo' => 'صورة',  
     'video' => 'فيديو',
     'voice' => 'صوت',
     'text' => 'نص',
 
     'no_found_js_prefix' => 'لا توجد ',
     'no_found_js_suffix' => ' حالياً',
+    'file_selected_prefix' => 'تم اختيار: ',
+    'files' => 'ملفات',
 
     'default_date' => 'بدون تاريخ',
 
@@ -57,4 +60,15 @@ return [
     'title_label' => 'عنوان الذاكرة',
     'update_button' => 'تحديث الذاكرة',
     'new_file_selected' => 'تم اختيار ملف جديد',
+
+    'delete_media' => 'حذف الوسائط',
+    'replace_media' => 'استبدال الوسائط',
+    'add_more_media' => 'إضافة المزيد من الوسائط',
+    'save_changes' => 'حفظ التعديلات',
+    'search_results' => 'ابحث',
+    'no_matches' => 'لا توجد ذكريات تطابق بحثك',
+    'details' => 'تفاصيل',
+    'favorite'=> 'المفضلة',
+    'recent' => 'الأخيرة',
+    'search_no_results_desc' => 'جرب استخدام كلمات مفتاحية مختلفة أو تحقق من وجود أخطاء إملائية.',
 ];

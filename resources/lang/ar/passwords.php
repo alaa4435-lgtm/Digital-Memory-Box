@@ -6,4 +6,18 @@ return [
     'throttled' => 'يرجى الانتظار قبل إعادة المحاولة.',
     'token' => 'رمز إعادة التعيين غير صالح.',
     'user' => 'لا يمكننا العثور على مستخدم بهذا البريد الإلكتروني.',
+    'current_password_incorrect' => 'كلمة المرور الحالية غير صحيحة.',
+    'password_updated_successfully' => 'تم تحديث كلمة المرور بنجاح.',
+    'change_password' => 'تغيير كلمة المرور',
+
+    'current_password' => 'كلمة المرور الحالية',
+
+    'new_password' => 'كلمة المرور الجديدة',
+
+    'confirm_password' => 'تأكيد كلمة المرور',
+
+    'update_password' => 'تحديث كلمة المرور',
+
+    'back_to_changepassword' => 'العودة الى نغيير كلمة السر',
+
 ];

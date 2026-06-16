@@ -3,7 +3,7 @@ return [
     'create_title' => 'Create a Memory',
     'create_subtitle' => 'Document a new precious moment in your secure sanctuary.',
     'upload_media' => 'Upload Media',
-    'drag_drop' => 'Drag and drop your file here',
+    'drag_drop' => 'Drag and drop your one file or more here',
     'file_limit' => 'Photos, Videos, or Audios up to 200MB',
     'browse_file' => 'Browse File',
     'description' => 'Description',
@@ -24,8 +24,9 @@ return [
     'audio_notes' => 'Audios',
     'text_notes' => 'Text Notes',
 
-    'no_items_found' => 'No items found',
-    'no_items_desc' => 'There are no saved items in this category at the moment.',
+    'no_items_found' => 'No Memories found',
+    'no_items_desc' => 'There are no saved Memories in this category at the moment.',
+    'items_found'=> 'Memories Found',
 
     'photo' => 'Photo',
     'video' => 'Video',
@@ -34,6 +35,8 @@ return [
 
     'no_found_js_prefix' => 'No ',
     'no_found_js_suffix' => ' Found',
+    'file_selected_prefix' => 'Selected: ',
+    'files' => 'files',
 
     'default_date' => 'No date',
 
@@ -62,4 +65,14 @@ return [
     'update_button' => 'Update Memory',
 
     'new_file_selected' => 'New file chosen',
+    'delete_media' => 'Delete Media',
+    'replace_media' => 'Replace Media',
+    'add_more_media' => 'Add More Media',
+    'save_changes' => 'Save Changes',
+    'search_results' => 'Search',
+    'details' => 'Details',
+    'no_matches' => 'No matches',
+    'favorite' => 'Favorite',
+    'recent' => 'Recent',
+    'search_no_results_desc' => 'Try using different keywords or check for spelling mistakes.',
 ];

@@ -11,11 +11,14 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use App\Notifications\ResetPasswordNotification;
+use Laragear\TwoFactor\TwoFactorAuthentication;
+use Laragear\TwoFactor\Contracts\TwoFactorAuthenticatable;
 
-#[Fillable(['name', 'email', 'password','locale'])]
+#[Fillable(['name', 'email', 'password', 'locale', 'avatar', 'background_image', 'two_factor_enabled', 'two_factor_code', 'two_factor_expires_at','typography_size', 'reduce_motion', 'email_notifications', 'push_notifications'])]
 #[Hidden(['password', 'remember_token'])]
-class User extends Authenticatable
+class User extends Authenticatable implements TwoFactorAuthenticatable
 {
+    use TwoFactorAuthentication;
     /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable, HasApiTokens;
     /**
@@ -28,6 +31,8 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'email_notifications' => 'boolean',
+            'push_notifications' => 'boolean',
         ];
     }
     public function preferredLocale(): string
@@ -42,4 +47,5 @@ class User extends Authenticatable
     {
         return $this->hasMany(Memory::class);
     }
+    
 }

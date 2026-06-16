@@ -34,7 +34,20 @@ class GoogleAuthController extends Controller
 
             Auth::login($user, true);
 
-            return redirect()->intended('/dashboard');
+            if ($user->two_factor_enabled) {
+                $code = rand(100000, 999999);
+
+                $user->update([
+                    'two_factor_code' => $code,
+                    'two_factor_expires_at' => now()->addMinutes(10),
+                ]);
+
+                $user->notify(new \App\Notifications\SendTwoFactorCode($code));
+
+                return redirect()->route('two-factor.verify');
+            }
+
+            return redirect()->intended(route('dashboard'));
 
         } catch (\Exception $e) {
             return redirect('/login')

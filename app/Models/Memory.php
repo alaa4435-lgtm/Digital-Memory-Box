@@ -10,13 +10,15 @@ class Memory extends Model
         'user_id',
         'title',
         'description',
-        'media_path',
-        'media_type',
         'is_favorite'
     ];
 
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+    public function media()
+    {
+        return $this->hasMany(MemoryMedia::class, 'memory_id');
     }
 }

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Middleware\SetLanguage;
+use App\Http\Middleware\EnsureTwoFactorIsAuthenticated;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -12,10 +13,15 @@ return Application::configure(basePath: dirname(__DIR__))
         commands: __DIR__ . '/../routes/console.php',
         health: '/up',
     )
-    ->withMiddleware(function ($middleware) {
+    ->withMiddleware(function (Middleware $middleware) {
         $middleware->web(append: [
             \App\Http\Middleware\SetLocale::class,
         ]);
+
+        $middleware->alias([
+            'twofactor' => \App\Http\Middleware\EnsureTwoFactorIsAuthenticated::class,
+        ]);
+
     })
 
     ->withExceptions(function (Exceptions $exceptions): void {

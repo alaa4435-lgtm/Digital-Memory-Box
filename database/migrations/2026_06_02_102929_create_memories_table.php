@@ -16,8 +16,6 @@ return new class extends Migration
         $table->foreignId('user_id')->constrained()->cascadeOnDelete();
         $table->string('title');
         $table->text('description')->nullable();
-        $table->string('media_path')->nullable();
-        $table->enum('media_type', ['image', 'video', 'audio', 'text'])->nullable();
         $table->boolean('is_favorite')->default(false);
         $table->timestamps();
     });

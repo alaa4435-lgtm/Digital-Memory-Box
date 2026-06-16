@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Memory;
+use App\Models\MemoryMedia;
 use App\Http\Requests\StoreMemoryRequest;
 use App\Http\Requests\UpdateMemoryRequest;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
@@ -18,26 +20,29 @@ class MemoryController extends Controller
     public function store(StoreMemoryRequest $request)
     {
         $memory = Memory::create([
-            ...$request->validated(),
+            'title' => $request->title,
+            'description' => $request->description,
             'user_id' => Auth::id(),
-            'media_type' => $request->hasFile('media') ? null : 'text',
         ]);
 
         if ($request->hasFile('media')) {
+            foreach ($request->file('media') as $file) {
+                $path = $file->store('memories', 'public');
+                $mimeType = $file->getMimeType();
 
-            $file = $request->file('media');
-            $memory->media_path = $file->store('memories', 'public');
+                if (str_starts_with($mimeType, 'image/')) {
+                    $mediaType = 'image';
+                } elseif (str_starts_with($mimeType, 'audio/')) {
+                    $mediaType = 'audio';
+                } else {
+                    $mediaType = 'video';
+                }
 
-            $mimeType = $file->getMimeType();
-            if (str_starts_with($mimeType, 'image/')) {
-                $memory->media_type = 'image';
-            } elseif (str_starts_with($mimeType, 'audio/')) {
-                $memory->media_type = 'audio';
-            } else {
-                $memory->media_type = 'video';
+                $memory->media()->create([
+                    'media_path' => $path,
+                    'media_type' => $mediaType,
+                ]);
             }
-
-            $memory->save();
         }
 
         return redirect()->route('memories.index');
@@ -45,48 +50,96 @@ class MemoryController extends Controller
 
     public function index()
     {
-        $memories = Memory::where('user_id', Auth::id())->get();
+        $memories = Memory::with('media')->where('user_id', Auth::id())->get();
         return view('memories.index', compact('memories'));
     }
 
     public function show(int $id)
     {
-        $memory = Memory::where('user_id', Auth::id())->findOrFail($id);
+        $memory = Memory::with('media')->where('user_id', Auth::id())->findOrFail($id);
         return view('memories.show', compact('memory'));
     }
 
     public function edit(int $id)
     {
-        $memory = Memory::where('user_id', Auth::id())->findOrFail($id);
+        $memory = Memory::with('media')->where('user_id', Auth::id())->findOrFail($id);
         return view('memories.edit', compact('memory'));
     }
 
     public function update(UpdateMemoryRequest $request, int $id)
     {
         $memory = Memory::where('user_id', Auth::id())->findOrFail($id);
-        $memory->update($request->validated());
 
+        $memory->update([
+            'title' => $request->title,
+            'description' => $request->description,
+        ]);
+
+        // 2. معالجة حذف الميديا المحددة فردياً
+        if ($request->has('deleted_media')) {
+            foreach ($request->deleted_media as $mediaId) {
+                if (!empty($mediaId)) {
+                    $oldMedia = $memory->media()->find($mediaId);
+                    if ($oldMedia) {
+                        if (Storage::disk('public')->exists($oldMedia->media_path)) {
+                            Storage::disk('public')->delete($oldMedia->media_path);
+                        }
+                        $oldMedia->delete();
+                    }
+                }
+            }
+        }
+
+        // 3. معالجة استبدال الميديا الفردية
+        if ($request->hasFile('replaced_media')) {
+            foreach ($request->file('replaced_media') as $mediaId => $file) {
+                $oldMedia = $memory->media()->find($mediaId);
+                if ($oldMedia) {
+                    // حذف الملف القديم المستبدل من التخزين
+                    if (Storage::disk('public')->exists($oldMedia->media_path)) {
+                        Storage::disk('public')->delete($oldMedia->media_path);
+                    }
+
+                    // رفع الملف الجديد
+                    $path = $file->store('memories', 'public');
+                    $mimeType = $file->getMimeType();
+
+                    if (str_starts_with($mimeType, 'image/')) {
+                        $mediaType = 'image';
+                    } elseif (str_starts_with($mimeType, 'audio/')) {
+                        $mediaType = 'audio';
+                    } else {
+                        $mediaType = 'video';
+                    }
+
+                    // تحديث السجل في قاعدة البيانات بدلاً من إنشائه مجدداً
+                    $oldMedia->update([
+                        'media_path' => $path,
+                        'media_type' => $mediaType,
+                    ]);
+                }
+            }
+        }
+
+        // 4. معالجة إضافة ميديا جديدة تماماً (بدون مسح القديم)
         if ($request->hasFile('media')) {
+            foreach ($request->file('media') as $file) {
+                $path = $file->store('memories', 'public');
+                $mimeType = $file->getMimeType();
 
-            if ($memory->media_path && Storage::disk('public')->exists($memory->media_path)) {
-                Storage::disk('public')->delete($memory->media_path);
+                if (str_starts_with($mimeType, 'image/')) {
+                    $mediaType = 'image';
+                } elseif (str_starts_with($mimeType, 'audio/')) {
+                    $mediaType = 'audio';
+                } else {
+                    $mediaType = 'video';
+                }
+
+                $memory->media()->create([
+                    'media_path' => $path,
+                    'media_type' => $mediaType,
+                ]);
             }
-
-            $file = $request->file('media');
-
-            $mediaData['media_path'] = $file->store('memories', 'public');
-            $mimeType = $file->getMimeType();
-            if (str_starts_with($mimeType, 'image/')) {
-                $mediaData['media_type'] = 'image';
-            } elseif (str_starts_with($mimeType, 'audio/')) {
-                $mediaData['media_type'] = 'audio';
-            } else {
-                $mediaData['media_type'] = 'video';
-            }
-
-            $memory->update($mediaData);
-        } elseif (!$memory->media_path) {
-            $memory->update(['media_type' => 'text']);
         }
 
         return redirect()->route('memories.index');
@@ -94,12 +147,16 @@ class MemoryController extends Controller
 
     public function destroy(int $id)
     {
-        $memory = Memory::where('user_id', Auth::id())->findOrFail($id);
+        $memory = Memory::with('media')->where('user_id', Auth::id())->findOrFail($id);
 
-        if ($memory->media_path) {
-            Storage::disk('public')->delete($memory->media_path);
+        foreach ($memory->media as $media) {
+            if ($media->media_path) {
+                Storage::disk('public')->delete($media->media_path);
+            }
         }
+
         $memory->delete();
+
         return redirect()->route('memories.index');
     }
 
@@ -110,5 +167,20 @@ class MemoryController extends Controller
         $memory->save();
 
         return back();
+    }
+
+    public function search(Request $request)
+    {
+        $search = $request->search;
+
+        $memories = Memory::with('media')->where('user_id', Auth::id())
+            ->where(function ($query) use ($search) {
+                $query->where('title', 'like', "%{$search}%")
+                    ->orWhere('description', 'like', "%{$search}%");
+            })
+            ->latest()
+            ->paginate(12);
+
+        return view('memories.search', compact('memories', 'search'));
     }
 }

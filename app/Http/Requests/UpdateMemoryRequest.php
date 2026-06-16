@@ -23,9 +23,10 @@ class UpdateMemoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'required|max:255',
-            'description' => 'nullable',
-            'media' => 'nullable|file|mimes:jpg,jpeg,png,mp4,mov,webm,mp3,ogg,wav,m4a,mpga|max:200000'
-        ];
+        'title' => 'required|max:255',
+        'description' => 'nullable',
+        'media' => 'nullable|array', 
+        'media.*' => 'file|mimes:jpg,jpeg,png,mp4,mov,webm,mp3,ogg,wav,m4a,mpga|max:200000' 
+    ];
     }
 }

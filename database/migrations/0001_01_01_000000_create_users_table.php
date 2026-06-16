@@ -18,7 +18,16 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('locale')->default('en');
+            $table->string('avatar')->nullable();
+            $table->string('background_image')->nullable();
             $table->rememberToken();
+            $table->boolean('two_factor_enabled')->default(false);
+            $table->string('two_factor_code')->nullable();
+            $table->timestamp('two_factor_expires_at')->nullable();
+            $table->integer('typography_size')->default(2);
+            $table->boolean('reduce_motion')->default(false);
+            $table->boolean('email_notifications')->default(true);
+            $table->boolean('push_notifications')->default(false);
             $table->timestamps();
         });
 

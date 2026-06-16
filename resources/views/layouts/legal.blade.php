@@ -8,10 +8,8 @@
 
     <link rel="icon" type="image/png" href="{{ asset('images/logo.png') }}">
 
-    <!-- Font -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    <!-- Tailwind -->
     <script src="https://cdn.tailwindcss.com"></script>
 
     <script>
@@ -43,23 +41,19 @@
 
 <body class="min-h-screen font-sans text-gray-900 p-3 lg:p-7">
 
-    <!-- LANGUAGE SWITCHER -->
     <div class="absolute top-6 right-6 z-50" dir="ltr">
         @include('components.lang-switcher')
     </div>
 
-    <!-- MAIN BOX (REDUCED ANOTHER 10%) -->
     <div class="max-w-2xl mx-auto mt-14">
 
         <div class="glass-card p-5 lg:p-7">
 
-            <!-- BACK BUTTON -->
             <a href="{{ auth()->check() ? url('/dashboard') : url('/') }}"
                 class="inline-flex items-center gap-1 text-sm text-gray-500 hover:text-indigo-600 transition font-medium">
                 <span>{{ __('auth.back_home') }}</span>
             </a>
 
-            <!-- NAV TABS -->
             <div class="flex justify-center gap-5 mb-5 text-sm border-b pb-4">
 
                 <a href="{{ url('/help-center') }}"
@@ -79,14 +73,14 @@
 
             </div>
 
-            <!-- LOGO -->
             <div class="flex justify-center mb-5">
-                <div class="w-11 h-11 bg-white rounded-2xl shadow-md flex items-center justify-center">
-                    <img src="{{ asset('images/logo.png') }}" class="w-6 h-6" alt="logo">
-                </div>
+                <a href="{{ auth()->check() ? url('/dashboard') : url('/') }}" class="block transform hover:scale-105 transition duration-200">
+                    <div class="w-11 h-11 bg-white rounded-2xl shadow-md flex items-center justify-center">
+                        <img src="{{ asset('images/logo.png') }}" class="w-6 h-6" alt="logo">
+                    </div>
+                </a>
             </div>
 
-            <!-- PAGE CONTENT -->
             @yield('content')
 
         </div>
