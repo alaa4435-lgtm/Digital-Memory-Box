@@ -56,6 +56,7 @@ return [
 
     'media_label' => 'Memory Media',
     'replace_file_text' => 'Click to replace current photo, video, or audio',
+    'audio_file' => 'Audio File',
     'browse_new_file' => 'Browse New File',
 
     'description_label' => 'Description / Story',

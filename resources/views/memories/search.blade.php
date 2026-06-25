@@ -141,10 +141,10 @@
 
                         <div class="flex items-center justify-between border-t border-slate-50/60 pt-3 mt-1"
                             onclick="event.stopPropagation();">
-                            <span class="text-[10px] font-bold text-slate-400 flex items-center gap-1">
-                                <i class="fa-regular fa-calendar text-[9px]"></i>
-                                {{ $memory->created_at ? $memory->created_at->format('M d, Y') : 'Recent' }}
-                            </span>
+<span class="text-[10px] font-bold text-slate-400 flex items-center gap-1">
+                            <i class="fa-regular fa-calendar text-[9px]"></i> 
+                            {{ $memory->created_at ? $memory->created_at->format('M d, Y') : __('memory.default_date') }}
+                        </span>
                             <div class="flex items-center gap-2">
                                 <form action="{{ route('memories.favorite', $memory->id) }}" method="POST" class="inline">
                                     @csrf

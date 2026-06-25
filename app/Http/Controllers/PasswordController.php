@@ -56,7 +56,7 @@ class PasswordController extends Controller
         );
 
         return $status === Password::PASSWORD_RESET
-            ? redirect('/login')->with('success', 'Password reset successful')
+            ? redirect('/login')->with('success', __('passwords.password_reset_successful'))
             : back()->withErrors(['email' => __($status)]);
     }
 
@@ -69,11 +69,11 @@ class PasswordController extends Controller
             ->first();
 
         if (!$record) {
-            return back()->withErrors(['pin' => 'Invalid PIN']);
+            return back()->withErrors(['pin' => __('passwords.invalid_pin')]);
         }
 
         if (now()->greaterThan($record->expires_at)) {
-            return back()->withErrors(['pin' => 'PIN expired']);
+            return back()->withErrors(['pin' => __('passwords.pin_expired')]);
         }
 
         return redirect()->route('password.reset', [

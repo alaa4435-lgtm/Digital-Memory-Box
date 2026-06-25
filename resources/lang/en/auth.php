@@ -87,4 +87,5 @@ return [
     'verify_email_link' => 'Verify Email Address',
     'email_verification_failed' => 'Email verification failed. Please try again.',
     'email_verified_success' => 'Email verified successfully!',
+    'user_profile' => 'User profile',
 ];

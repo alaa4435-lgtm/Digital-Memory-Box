@@ -85,5 +85,5 @@ return [
     'verify_email_link' => 'تحقق من بريدك الإلكتروني',
     'email_verification_failed' => 'فشل التحقق من البريد الإلكتروني. يرجى المحاولة مرة أخرى.',
     'email_verified_success' => 'تم التحقق من بريدك الإلكتروني بنجاح!',
-
+    'user_profile' => 'الملف الشخصي للمستخدم',
 ];

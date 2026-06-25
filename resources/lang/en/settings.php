@@ -24,7 +24,6 @@ return [
     'theme_notice' => 'The application currently uses a comforting pastel light theme to provide a calming experience. Dark mode is disabled by design.',
 
     'typography_size' => 'Typography Size',
-    'medium_default' => 'Medium (Default)',
 
     'reduce_motion' => 'Reduce Motion',
     'reduce_motion_desc' => 'Minimize animations for a calmer experience.',
@@ -42,7 +41,7 @@ return [
 
     'help_support' => 'Help & Support',
     'logout' => 'Log Out',
-    'Settings updated successfully' => 'Settings updated successfully.',
+    'settings_updated_successfully' => 'Settings updated successfully.',
     'notifications_title' => 'Notification Settings',
     'notifications_subtitle' => 'Choose how you want to be notified about updates and activity.',
     'notifications_desc' => 'Configure your system alert channels.',

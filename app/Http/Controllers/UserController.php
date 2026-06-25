@@ -17,7 +17,7 @@ class UserController extends Controller
     public function profile()
     {
         $user = Auth::user();
-        return view('setting.General.profile', compact('user'));
+        return view('user.profile', compact('user'));
     }
     public function changePassword()
     {
@@ -57,11 +57,11 @@ class UserController extends Controller
 
         return redirect()
             ->route('profile')
-            ->with('success', __('settings.Settings updated successfully'));
+            ->with('success', __('settings.settings_updated_successfully'));
     }
     public function settings()
     {
         $user = Auth::user();
-        return view('setting.settings', compact('user'));
+        return view('setting.General.general', compact('user'));
     }
 }

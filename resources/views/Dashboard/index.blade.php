@@ -178,7 +178,7 @@
                     <div class="flex items-center justify-between border-t border-slate-50/60 pt-3 mt-1" onclick="event.stopPropagation();">
                         <span class="text-[10px] font-bold text-slate-400 flex items-center gap-1">
                             <i class="fa-regular fa-calendar text-[9px]"></i> 
-                            {{ $memory->created_at ? $memory->created_at->format('M d, Y') : 'Recent' }}
+                            {{ $memory->created_at ? $memory->created_at->format('M d, Y') : __('memory.default_date') }}
                         </span>
                         <div class="flex items-center gap-2">
                             <form action="{{ route('memories.favorite', $memory->id) }}" method="POST" class="inline">
@@ -190,7 +190,7 @@
                             </form>
                             
                             <a href="{{ route('memories.show', $memory->id) }}" class="text-[10px] font-bold text-indigo-500 hover:text-indigo-700 transition-colors">
-                                Details <i class="fa-solid fa-angle-right text-[8px]"></i>
+                                {{ __('memory.details') }} <i class="fa-solid fa-angle-right text-[8px]"></i>
                             </a>
                         </div>
                     </div>
@@ -199,7 +199,7 @@
                 @for ($i = 0; $i < 4; $i++)
                     <div class="bg-white/40 border-2 border-dashed border-slate-200/60 h-44 rounded-3xl flex flex-col items-center justify-center text-xs text-slate-400 font-medium p-4 text-center">
                         <span>{{ __('home.empty_slot') }}</span>
-                        <a href="{{ route('memories.create') }}" class="text-[10px] text-indigo-500 mt-1 hover:underline">+ Add</a>
+                        <a href="{{ route('memories.create') }}" class="text-[10px] text-indigo-500 mt-1 hover:underline">+ {{ __('memory.add_new') }}</a>
                     </div>
                 @endfor
             @endforelse

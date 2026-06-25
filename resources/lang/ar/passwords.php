@@ -20,4 +20,7 @@ return [
 
     'back_to_changepassword' => 'العودة الى نغيير كلمة السر',
 
+    'password_reset_successful' => 'تم إعادة تعيين كلمة المرور بنجاح',
+    'invalid_pin' => 'رمز غير صحيح',
+    'pin_expired' => 'الرمز منتهي الصلاحية',
 ];

@@ -13,7 +13,7 @@ class SettingsController extends Controller
     public function index()
     {
         $user = Auth::user();
-        return view('setting.settings', compact('user'));
+        return view('setting.General.general', compact('user'));
     }
 
     /**
@@ -47,10 +47,10 @@ class SettingsController extends Controller
         if ($request->wantsJson() || $request->ajax()) {
             return response()->json([
                 'success' => true,
-                'message' => __('settings.Settings updated successfully')
+                'message' => __('settings.settings_updated_successfully')
             ]);
         }
 
-        return back()->with('success', __('settings.Settings updated successfully'));
+        return back()->with('success', __('settings.settings_updated_successfully'));
     }
 }

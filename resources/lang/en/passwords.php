@@ -14,4 +14,7 @@ return [
     'confirm_password' => 'Confirm Password',
     'update_password' => 'Update Password',
     'back_to_changepassword' => 'Back to Change Password',
+    'password_reset_successful' => 'Password reset successful',
+    'invalid_pin' => 'Invalid PIN',
+    'pin_expired' => 'PIN expired',
 ];

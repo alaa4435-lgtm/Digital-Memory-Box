@@ -63,26 +63,19 @@ public function login(UserLoginRequest $request)
             ]);
         }
 
-        // 🌟 فحص التحقق الثنائي (2FA) 🌟
         if ($user->two_factor_enabled) {
             
-            // 1. توليد كود عشوائي من 6 أرقام
             $code = rand(100000, 999999);
 
-            // 2. تخزين الكود وصلاحيته (تنتهي بعد 10 دقائق)
             $user->update([
                 'two_factor_code' => $code,
                 'two_factor_expires_at' => now()->addMinutes(10),
             ]);
-
-            // 3. إرسال الكود إلى بريد المستخدم الإلكتروني
             $user->notify(new SendTwoFactorCode($code));
 
-            // 4. تحويله فوراً إلى صفحة إدخال الكود ومنعه من دخول الـ Dashboard حالياً
             return redirect()->route('two-factor.verify');
         }
 
-        // إذا لم تكن الميزة مفعلة، يدخل تلقائياً إلى لوحة التحكم
         return redirect()->intended('dashboard');
     }
 
@@ -107,7 +100,7 @@ public function login(UserLoginRequest $request)
         $user = Auth::guard('web')->user();
 
         return response()->json([
-            'message' => 'User profile',
+            'message' => __('auth.user_profile'),
             'data' => $user,
             'locale' => $user->locale,
         ]);

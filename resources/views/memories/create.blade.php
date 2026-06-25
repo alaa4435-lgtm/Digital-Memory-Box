@@ -116,16 +116,16 @@ function removeNewFile(fileId) {
 }
 
 function updateStatusAndInput() {
-    const status = document.getElementById('uploadStatus');
-    const mainInput = document.getElementById('mediaInput');
-    
-    if (newFilesArray.length > 0) {
-        status.innerText = "Selected: " + newFilesArray.length + " file(s)";
-        status.classList.add('text-indigo-600');
-    } else {
-        status.innerText = "{{ __('memory.drag_drop') }}";
-        status.classList.remove('text-indigo-600');
-    }
+    	const status = document.getElementById('uploadStatus');
+    	const mainInput = document.getElementById('mediaInput');
+    	
+    	if (newFilesArray.length > 0) {
+    		status.innerText = "{{ __('memory.file_selected_prefix') }}" + newFilesArray.length + " {{ __('memory.files') }}";
+    		status.classList.add('text-indigo-600');
+    	} else {
+    		status.innerText = "{{ __('memory.drag_drop') }}";
+    		status.classList.remove('text-indigo-600');
+    	}
 
     const dataTransfer = new DataTransfer();
     newFilesArray.forEach(item => dataTransfer.items.add(item.file));

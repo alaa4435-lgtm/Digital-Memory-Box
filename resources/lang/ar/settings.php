@@ -24,7 +24,6 @@ return [
     'theme_notice' => 'يستخدم التطبيق حالياً مظهراً فاتحاً بألوان هادئة لتوفير تجربة مريحة. الوضع الداكن غير متوفر حالياً.',
 
     'typography_size' => 'حجم الخط',
-    'medium_default' => 'متوسط (الافتراضي)',
 
     'reduce_motion' => 'تقليل الحركة',
     'reduce_motion_desc' => 'تقليل الحركات والمؤثرات لتجربة أكثر هدوءاً.',
@@ -43,7 +42,7 @@ return [
     'help_support' => 'المساعدة والدعم',
     'logout' => 'تسجيل الخروج',
 
-    'Settings updated successfully' => 'تم تحديث الإعدادات بنجاح.',
+    'settings_updated_successfully' => 'تم تحديث الإعدادات بنجاح.',
     'notifications_title' => 'إعدادات الإشعارات',
     'notifications_subtitle' => 'اختر كيف ترغب في تلقي التنبيهات حول التحديثات والنشاطات.',
     'notifications_desc' => 'تكوين قنوات التنبيه الخاصة بالنظام.',

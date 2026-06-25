@@ -59,7 +59,7 @@
                                     class="w-full h-1 bg-slate-100 rounded-lg appearance-none cursor-pointer accent-indigo-600">
                                 <div class="flex justify-between items-center text-slate-400 font-medium mt-2">
                                     <span class="text-sm font-medium">A</span>
-                                    <span class="text-[11px]" id="typography-label">Medium (Default)</span>
+                                    <span class="text-[11px]" id="typography-label">{{ __('settings.size_medium') }}</span>
                                     <span class="text-lg font-medium">A</span>
                                 </div>
                             </div>

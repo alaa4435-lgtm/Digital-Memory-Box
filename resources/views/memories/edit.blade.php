@@ -32,7 +32,7 @@
                                     @elseif($item->media_type == 'audio')
                                         <div class="p-4 text-center w-full bg-slate-50 flex flex-col items-center justify-center h-40" id="preview-audio-{{ $item->id }}">
                                             <i class="fa-solid fa-volume-high text-3xl text-indigo-500 mb-1"></i>
-                                            <p class="text-[10px] text-slate-500">Audio File</p>
+                                            <p class="text-[10px] text-slate-500">{{ __('memory.audio_file') }}</p>
                                         </div>
                                     @else
                                         <video src="{{ asset('storage/' . $item->media_path) }}" class="max-h-40 w-full object-cover" controls id="preview-video-{{ $item->id }}"></video>

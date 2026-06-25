@@ -29,4 +29,5 @@ return [
     'settings' => 'Settings',
     'profile' => 'My Profile',
     'regards'=> 'Regards',
+    'recent' => 'Recent',
 ];

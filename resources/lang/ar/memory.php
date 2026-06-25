@@ -55,6 +55,7 @@ return [
 
     'media_label' => 'وسائط الذاكرة',
     'replace_file_text' => 'اضغط لاستبدال الصورة أو الفيديو أو الصوت الحالي',
+    'audio_file' => 'ملف صوتي',
     'browse_new_file' => 'اختر ملف جديد',
     'description_label' => 'الوصف / القصة',
     'title_label' => 'عنوان الذاكرة',
