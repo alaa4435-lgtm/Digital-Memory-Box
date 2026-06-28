@@ -37,6 +37,7 @@ This project focuses on improving personal information management through a simp
 ## Project Structure
 
 Digital-Memory-Box/
+
 │
 ├── index.html      # Main page (UI structure)
 
