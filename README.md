@@ -49,10 +49,8 @@ Digital-Memory-Box/
 ## How to Run the Project
 1. Clone the repository:
 git clone https://github.com/alaa4435-lgtm/Digital-Memory-Box.git
-
 2. Navigate to the project folder:
 cd Digital-Memory-Box
-
 3. Open the project:
 Double click on index.html
 OR Open it using Live Server in VS Code/Antigravity
