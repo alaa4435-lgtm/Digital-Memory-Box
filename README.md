@@ -39,6 +39,7 @@ This project focuses on improving personal information management through a simp
 Digital-Memory-Box/
 
 │
+
 ├── index.html      # Main page (UI structure)
 
 ├── style.css       # Styling file (design & layout)
