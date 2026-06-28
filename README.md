@@ -33,12 +33,47 @@ The project focuses on improving personal information management through a simpl
 
 **Project Structure**
 
+# 📸 Digital Memory Box
+
+A sleek, lightweight web-based application designed to allow users to store, organize, and manage personal memories in a simple and intuitive way. Keep your important moments, notes, and digital content safely in one place.
+
+---
+
+## 📌 Overview
+
+**Digital Memory Box** acts as your personal digital archive. It enables users to create, edit, delete, and organize memories efficiently while maintaining a clean, modern, and user-friendly interface. 
+
+This project focuses on streamlining personal information management through a highly accessible frontend system.
+
+---
+
+## ✨ Features
+
+* **Add New Memories:** Quickly capture moments with text and media.
+* **Organize Seamlessly:** View and retrieve your stored memories effortlessly.
+* **Full CRUD Functionality:** Easily edit or delete existing memory logs.
+* **Persistent Storage:** Saves data locally using `LocalStorage` so your memories remain intact even after refreshing the page.
+* **Clean UI/UX:** A minimalist, distraction-free interface.
+
+---
+
+## 🛠️ Tech Stack
+
+* **HTML5** – Structured semantic layout
+* **CSS3** – Modern responsive styling and UI design
+* **JavaScript (Vanilla JS)** – Dynamic DOM manipulation and app logic
+* **LocalStorage** – Client-side data persistence
+
+---
+
+## 📁 Project Structure
+
 ```text
 Digital-Memory-Box/
 │
 ├── index.html          # Main HTML entry point and page layout
 ├── style.css           # Global stylesheet and visual layout
-├── script.js          # Core application logic and interactive features
+├── script.js           # Core application logic and interactive features
 ├── assets/             # Media assets including images, icons, and audio
 └── README.md           # Project documentation and setup guide
 ---
