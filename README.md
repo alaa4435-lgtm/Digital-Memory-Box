@@ -33,13 +33,14 @@ The project focuses on improving personal information management through a simpl
 
 **Project Structure**
 
+```text
 Digital-Memory-Box/
 │
-├── index.html # Main page
-├── style.css # Styling file
-├── script.js # Application logic
-├── assets/ # Images, icons, and resources
-└── README.md # Project documentation
+├── index.html          # Main HTML entry point and page layout
+├── style.css           # Global stylesheet and visual layout
+├── script.js          # Core application logic and interactive features
+├── assets/             # Media assets including images, icons, and audio
+└── README.md           # Project documentation and setup guide
 ---
 
 **How to Run the Project**
