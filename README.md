@@ -35,26 +35,22 @@ This project focuses on improving personal information management through a simp
 ---
 
 ## Project Structure
-```text
+**```text
 Digital-Memory-Box/
 │
 ├── index.html      # Main page (UI structure)
 ├── style.css       # Styling file (design & layout)
 ├── script.js       # Application logic (functionality)
 ├── assets/         # Images, icons, and resources
-└── README.md       # Project documentation
+└── README.md       # Project documentation**
 
 ---
 
 ## How to Run the Project
 1. Clone the repository:
-```markdown
-```bash
-git clone [https://github.com/alaa4435-lgtm/Digital-Memory-Box.git](https://github.com/alaa4435-lgtm/Digital-Memory-Box.git)
+git clone https://github.com/alaa4435-lgtm/Digital-Memory-Box.git 
 
 2.Navigate to the project folder:
-```markdown
-```bash
 cd Digital-Memory-Box
 
 3. Open the project:
