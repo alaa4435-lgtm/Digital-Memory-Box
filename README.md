@@ -76,21 +76,20 @@ Digital-Memory-Box/
 ├── script.js           # Core application logic and interactive features
 ├── assets/             # Media assets including images, icons, and audio
 └── README.md           # Project documentation and setup guide
----
 
-**How to Run the Project**
 
+How to Run the Project
 1. Clone the repository:
-```bash
-git clone https://github.com/alaa4435-lgtm/Digital-Memory-Box.git
+Bash
+git clone [https://github.com/alaa4435-lgtm/Digital-Memory-Box.git](https://github.com/alaa4435-lgtm/Digital-Memory-Box.git)
 
-2. Navigate to the project folder:
+2.Navigate to the project folder:
+Bash
 cd Digital-Memory-Box
 
 3. Open the project:
 Double click on index.html
-OR
-Open it using Live Server in VS Code/Antigravity
+OR Open it using Live Server in VS Code/Antigravity
 
 ---
 
